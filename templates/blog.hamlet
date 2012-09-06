@@ -1,0 +1,12 @@
+<h1>Posts (/blog)</h1>
+$if null posts
+    <p> There are no articles in the blog
+$else
+    <table border="1">
+      <tr><th>Name</th><th>Title</th><th>timestamp</th><th>Action</th>
+      $forall Entity postId post <- posts
+        <tr>
+            <td> #{postName post}
+            <td> #{postTitle post}
+            <td> #{show $ postCreatedAt post}
+
