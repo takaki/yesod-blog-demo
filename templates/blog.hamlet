@@ -9,6 +9,8 @@ $else
             <td> #{postName post}
             <td> #{postTitle post}
             <td> #{show $ postCreatedAt post}
+            <td>
+                <a href=@{PostViewR postId} > Show
 
 <a href=@{PostNewR} >Post New
 

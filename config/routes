@@ -7,4 +7,5 @@
 / HomeR GET POST
 
 /blog                           BlogR           GET
+/blog/#PostId                   PostViewR       GET
 /blog/post/new                  PostNewR        GET POST

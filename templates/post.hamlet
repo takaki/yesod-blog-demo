@@ -1,0 +1,9 @@
+<h1> #{postTitle post}
+<div> #{postContent post}
+<p> #{show $ postCreatedAt post}
+
+<ul>
+  <li>
+    <a href=@{BlogR}>Blog Top
+
+

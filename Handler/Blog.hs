@@ -39,3 +39,10 @@ postPostNewR = do
                 setTitle "Please correct your entry form"
                 $(widgetFile "post_new")
 
+getPostViewR :: PostId -> Handler RepHtml
+getPostViewR postId = do
+  post <- runDB $ get404 postId
+  defaultLayout $ do
+    setTitle $ toHtml $ postTitle post
+    $(widgetFile "post")
+
