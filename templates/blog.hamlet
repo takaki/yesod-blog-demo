@@ -10,3 +10,5 @@ $else
             <td> #{postTitle post}
             <td> #{show $ postCreatedAt post}
 
+<a href=@{PostNewR} >Post New
+

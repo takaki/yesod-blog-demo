@@ -7,4 +7,4 @@
 / HomeR GET POST
 
 /blog                           BlogR           GET
-
+/blog/post/new                  PostNewR        GET POST
