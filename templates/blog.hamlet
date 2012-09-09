@@ -11,6 +11,8 @@ $else
             <td> #{show $ postCreatedAt post}
             <td>
                 <a href=@{PostViewR postId} > Show
+                <a href=@{PostEditR postId} > Edit
+                <a href=@{PostDeleteR postId} > Delete
 
 <a href=@{PostNewR} >Post New
 

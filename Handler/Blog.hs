@@ -46,3 +46,33 @@ getPostViewR postId = do
     setTitle $ toHtml $ postTitle post
     $(widgetFile "post")
 
+getPostEditR :: PostId -> Handler RepHtml
+getPostEditR postId = do
+  post <- runDB $ get404 postId
+  (postWidget, enctype) <- generateFormPost $ postForm $ Just post
+  defaultLayout $ do
+    $(widgetFile "post_new")
+
+postPostEditR :: PostId -> Handler RepHtml
+postPostEditR postId = do
+  ((res, postWidget), enctype) <- runFormPost $ postForm Nothing
+  case res of
+       FormSuccess post -> do 
+         runDB $ do 
+           _post <- get404 postId
+           update postId [ PostName    =. postName post
+                         , PostTitle   =. postTitle post
+                         , PostContent =. postContent post]
+         setMessage $ toHtml $ (postTitle post) <> "updated"
+         redirect $ PostViewR postId
+       _ -> defaultLayout $ do
+         setTitle "Please corrrect your entry form"
+         $(widgetFile "post_new")
+         
+getPostDeleteR :: PostId -> Handler RepHtml
+getPostDeleteR postId = do
+  runDB $ do
+    _post <- get404 postId
+    delete postId
+  redirect $ BlogR
+
