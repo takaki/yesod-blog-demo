@@ -42,6 +42,8 @@ postPostNewR = do
 getPostViewR :: PostId -> Handler RepHtml
 getPostViewR postId = do
   post <- runDB $ get404 postId
+  comments <- runDB $ selectList [CommentPostId ==. postId] [Asc CommentId]
+  (commentWidget, enctype) <- generateFormPost $ commentForm postId
   defaultLayout $ do
     setTitle $ toHtml $ postTitle post
     $(widgetFile "post")
@@ -74,5 +76,26 @@ getPostDeleteR postId = do
   runDB $ do
     _post <- get404 postId
     delete postId
+    deleteWhere [ CommentPostId ==. postId ]
   redirect $ BlogR
+
+commentForm :: PostId -> Form Comment
+commentForm postId = renderDivs $ Comment
+  <$> areq textField     "Commenter" Nothing
+  <*> areq textareaField "Body"      Nothing
+  <*> aformM (liftIO getCurrentTime)
+  <*> pure postId
+
+postCommentNewR :: PostId -> Handler RepHtml
+postCommentNewR postId = do
+  _post <- runDB $ get404 postId
+  ((res, commentWidget), enctype) <- runFormPost $ commentForm postId
+  case res of
+    FormSuccess comment -> do
+      commentId <- runDB $ insert comment
+      setMessage $ toHtml $ (commentCommenter comment)
+      redirect $ PostViewR postId
+    _ -> do
+      setMessage "add correct comment"
+      redirect $ PostViewR postId
 

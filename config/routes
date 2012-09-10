@@ -11,4 +11,5 @@
 /blog/post/new                  PostNewR        GET POST
 /blog/post/edit/#PostId         PostEditR       GET POST
 /blog/post/delete/#PostId       PostDeleteR     GET
+/blog/#PostId/comment/new       CommentNewR     POST
 

@@ -7,3 +7,20 @@
     <a href=@{BlogR}>Blog Top
 
 
+<h2>Comments
+$if null comments 
+  <p> There are no comments in this post.
+$else
+  $forall Entity commentId comment <- comments
+    <div>
+      Commenter: #{commentCommenter comment} 
+      (#{show $ commentCreatedAt comment})
+      <p>
+        #{commentBody comment}
+    <hr>
+
+<form method=post action=@{CommentNewR postId} enctype=#{enctype}>
+    ^{commentWidget}
+    <div>
+        <input type=submit value="Post New Comment">
+

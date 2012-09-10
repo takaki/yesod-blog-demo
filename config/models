@@ -17,3 +17,11 @@ Post
   createdAt UTCTime default=CURRENT_TIMESTAMP
   deriving 
 
+Comment
+  commenter Text
+  body Textarea 
+  createdAt UTCTime default=CURRENT_TIMESTAMP
+  postId PostId
+  deriving
+
+
